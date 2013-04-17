@@ -11,7 +11,7 @@
         android:layout_marginLeft="30dp"
         android:layout_gravity="center"
         android:textSize="18dp"
-        android:text="毎月のプラン開始日" />
+        android:text="開始日" />
 
     <NumberPicker
         android:id="@+id/numberPicker"

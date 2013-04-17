@@ -14,72 +14,67 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-public class SettingFragment extends PreferenceFragment implements
-		OnPreferenceChangeListener, OnPreferenceClickListener {
+public class SettingFragment extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
-	private NumberPicker _np;
+    private NumberPicker _np;
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.preferences);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
 
+        final PreferenceScreen datepf = (PreferenceScreen) findPreference("");
+        datepf.setOnPreferenceClickListener(this);
 
-		final PreferenceScreen datepf = (PreferenceScreen) findPreference("");
-		datepf.setOnPreferenceClickListener(this);
+    }
 
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (preference.getKey().equals("")) {
+            showDialog();
+            return true;
+        }
+        return false;
+    }
 
-	}
+    /**
+     * NumberPickerのダイアログを生成
+     */
+    private void showDialog() {
+        class MainFragmentDialog extends DialogFragment {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View view = inflater.inflate(R.layout.setting_dialog, null, false);
 
+                _np = (NumberPicker) view.findViewById(R.id.numberPicker);
+                _np.setMaxValue(31);
+                _np.setMinValue(1);
 
-	@Override
-	public boolean onPreferenceClick(Preference preference) {
-		if (preference.getKey().equals("")) {
-			showDialog();
-			return true;
-		}
-		return false;
-	}
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Number Picker");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-	/**
-	 * NumberPickerのダイアログを生成
-	 */
-	private void showDialog() {
-		class MainFragmentDialog extends DialogFragment {
-	        @Override
-	        public Dialog onCreateDialog(Bundle savedInstanceState) {
-	            LayoutInflater inflater = getActivity().getLayoutInflater();
-	            View view = inflater.inflate(R.layout.setting_dialog, null, false);
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-	            _np = (NumberPicker)view.findViewById(R.id.numberPicker);
-	            _np.setMaxValue(31);
-	            _np.setMinValue(1);
+                        // OKクリック時の処理
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.setView(view);
+                return builder.create();
+            }
+        }
 
-	            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-	            builder.setTitle("Number Picker");
-	            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        // Dialogの表示
+        MainFragmentDialog dialog = new MainFragmentDialog();
+        dialog.show(getFragmentManager(), "span_setting_dialog");
+    }
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-
-						//OKクリック時の処理
-					}
-				});
-	            builder.setNegativeButton("Cancel", null);
-	            builder.setView(view);
-	            return builder.create();
-	        }
-	    }
-
-		//Dialogの表示
-		MainFragmentDialog dialog = new MainFragmentDialog();
-		dialog.show(getFragmentManager(), "span_setting_dialog");
-	}
-
-
-	@Override
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        // TODO 自動生成されたメソッド・スタブ
+        return false;
+    }
 
 }
