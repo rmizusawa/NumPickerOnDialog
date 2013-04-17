@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="プラン設定" >
+        <EditTextPreference
+            android:inputType="number"
+            android:key="free_call_min"
+            android:summary=""
+            android:title="無料通話分数" />
+        <EditTextPreference
+            android:inputType="number"
+            android:key="data_volume"
+            android:summary=""
+            android:title="データ通信料(GB)" />
+
+        <PreferenceScreen
+            android:key="plan_start_day"
+            android:summary=""
+            android:title="契約プランのサイクル" />
+
+        <CheckBoxPreference
+            android:key="notification"
+            android:summaryOff="通知しない"
+            android:summaryOn="通知する"
+            android:title="残データ量の10%以下通知" />
+
+        <Preference
+            android:key="back_key"
+            android:title="戻る" >
+        </Preference>
+<!--         <Preference
+            android:key="start"
+            android:title="start" >
+        </Preference>
+        <Preference
+            android:key="end"
+            android:title="end" >
+        </Preference> -->
+    </PreferenceCategory>
+
+</PreferenceScreen>
